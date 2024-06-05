@@ -19,21 +19,27 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String id;
-    private String login;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "senha", nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole role;
 
     public User(RegisterDTO data) {
-        this.login = data.login();
+        this.email = data.email();
         this.password = data.password();
         this.role = data.role();
     }
 
     public User(String login, String password, UserRole role){
-        this.login = login;
+        this.email = login;
         this.password = password;
         this.role = role;
     }
@@ -46,7 +52,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override

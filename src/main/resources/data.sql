@@ -1,1 +1,0 @@
-INSERT INTO users(login, password, role) VALUES ("test@gmail.com", "123456", "admin");

@@ -9,5 +9,4 @@ public class TechmeetBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TechmeetBackendApplication.class, args);
 	}
-
 }
