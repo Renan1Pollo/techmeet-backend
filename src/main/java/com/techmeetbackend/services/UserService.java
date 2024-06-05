@@ -1,7 +1,7 @@
 package com.techmeetbackend.services;
 
-import com.techmeetbackend.domain.User;
-import com.techmeetbackend.dtos.UserDTO;
+import com.techmeetbackend.domain.user.RegisterDTO;
+import com.techmeetbackend.domain.user.User;
 import com.techmeetbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class UserService {
         return this.repository.findUserByEmail(email).orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
-    public User createUser(UserDTO data){
-        User newUser = new User(data);
+    public User createUser(RegisterDTO data){
+        User newUser = new User (data);
         this.saveUser(newUser);
         return newUser;
     }
