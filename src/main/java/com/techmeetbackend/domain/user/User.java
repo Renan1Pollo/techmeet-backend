@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private UserRole role;
 
     public User(RegisterDTO data) {
+        this.name = data.name();
         this.email = data.email();
         this.password = data.password();
         this.role = data.role();
