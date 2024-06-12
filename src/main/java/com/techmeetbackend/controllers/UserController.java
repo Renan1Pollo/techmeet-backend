@@ -1,6 +1,6 @@
 package com.techmeetbackend.controllers;
 
-import com.techmeetbackend.domain.user.RegisterDTO;
+import com.techmeetbackend.dtos.RegisterDTO;
 import com.techmeetbackend.domain.user.User;
 import com.techmeetbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

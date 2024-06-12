@@ -1,5 +1,6 @@
 package com.techmeetbackend.domain.user;
 
+import com.techmeetbackend.dtos.RegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
