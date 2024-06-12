@@ -1,7 +1,7 @@
 package com.techmeetbackend.controllers;
 
 import com.techmeetbackend.domain.event.Event;
-import com.techmeetbackend.domain.event.EventDTO;
+import com.techmeetbackend.dtos.EventDTO;
 import com.techmeetbackend.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

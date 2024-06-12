@@ -1,5 +1,6 @@
 package com.techmeetbackend.domain.event;
 
+import com.techmeetbackend.dtos.EventDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
