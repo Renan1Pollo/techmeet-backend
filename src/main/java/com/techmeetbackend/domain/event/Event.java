@@ -30,4 +30,12 @@ public class Event {
 
     @Column(name = "date", nullable = false)
     private String date;
+
+    public Event(EventDTO data) {
+        this.name = data.name();
+        this.description = data.description();
+        this.state = data.state();
+        this.image = data.image();
+        this.date = data.date();
+    }
 }
