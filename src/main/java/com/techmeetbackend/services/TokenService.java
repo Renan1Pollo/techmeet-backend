@@ -1,4 +1,4 @@
-package com.techmeetbackend.infra.security;
+package com.techmeetbackend.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

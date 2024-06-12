@@ -1,13 +1,14 @@
 package com.techmeetbackend.controllers;
 
 
-import com.techmeetbackend.domain.user.AuthenticationDTO;
-import com.techmeetbackend.domain.user.LoginResponseDTO;
-import com.techmeetbackend.domain.user.RegisterDTO;
+import com.techmeetbackend.dtos.AuthenticationDTO;
+import com.techmeetbackend.dtos.LoginResponseDTO;
+import com.techmeetbackend.dtos.RegisterDTO;
 import com.techmeetbackend.domain.user.User;
-import com.techmeetbackend.infra.security.TokenService;
+import com.techmeetbackend.services.TokenService;
 import com.techmeetbackend.repositories.UserRepository;
 
+import com.techmeetbackend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
+
     @Autowired
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
@@ -40,13 +44,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+        if (this.userService.findUserByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword, data.role());
-
-        this.repository.save(newUser);
+        this.userService.createUser(new RegisterDTO(data.name(), data.email(), encryptedPassword, data.role()));
 
         return ResponseEntity.ok().build();
     }

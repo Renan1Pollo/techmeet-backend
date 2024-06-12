@@ -1,3 +1,3 @@
-package com.techmeetbackend.domain.user;
+package com.techmeetbackend.dtos;
 
 public record LoginResponseDTO(String token) {}
