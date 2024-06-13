@@ -1,6 +1,6 @@
 package com.techmeetbackend.services;
 
-import com.techmeetbackend.dtos.RegisterDTO;
+import com.techmeetbackend.dtos.RegisterRequestDTO;
 import com.techmeetbackend.domain.user.User;
 import com.techmeetbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,15 @@ public class UserService {
         return this.repository.findUserByEmail(email);
     }
 
-    public User createUser(RegisterDTO data) {
+    public User createUser(RegisterRequestDTO data) {
         User newUser = new User(data);
         this.saveUser(newUser);
         return newUser;
     }
 
     public List<User> getAllUsers() {
-        return this.repository.findAll();
+        List<User> list = this.repository.findAll();
+        return list;
     }
 
     public void saveUser(User user) {

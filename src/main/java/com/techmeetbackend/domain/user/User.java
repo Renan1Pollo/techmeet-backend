@@ -1,6 +1,6 @@
 package com.techmeetbackend.domain.user;
 
-import com.techmeetbackend.dtos.RegisterDTO;
+import com.techmeetbackend.dtos.RegisterRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,11 +36,11 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
-    public User(RegisterDTO data) {
+    public User(RegisterRequestDTO data) {
         this.name = data.name();
         this.email = data.email();
         this.password = data.password();
-        this.role = data.role();
+        this.role = data.userRole();
     }
 
     public User(String login, String password, UserRole role) {
@@ -51,7 +51,8 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
@@ -83,5 +84,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 }

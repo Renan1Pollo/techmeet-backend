@@ -1,12 +1,11 @@
 package com.techmeetbackend.controllers;
 
 
-import com.techmeetbackend.dtos.AuthenticationDTO;
+import com.techmeetbackend.dtos.LoginRequestDTO;
 import com.techmeetbackend.dtos.LoginResponseDTO;
-import com.techmeetbackend.dtos.RegisterDTO;
+import com.techmeetbackend.dtos.RegisterRequestDTO;
 import com.techmeetbackend.domain.user.User;
 import com.techmeetbackend.services.TokenService;
-import com.techmeetbackend.repositories.UserRepository;
 
 import com.techmeetbackend.services.UserService;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
-public class AuthenticationController {
+public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -34,7 +33,7 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity login(@RequestBody @Valid LoginRequestDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
@@ -44,11 +43,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity register(@RequestBody RegisterRequestDTO data) {
         if (this.userService.findUserByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        this.userService.createUser(new RegisterDTO(data.name(), data.email(), encryptedPassword, data.role()));
+        this.userService.createUser(new RegisterRequestDTO(data.name(), data.email(), data.password(), data.userRole()));
 
         return ResponseEntity.ok().build();
     }

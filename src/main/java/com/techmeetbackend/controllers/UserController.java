@@ -1,6 +1,6 @@
 package com.techmeetbackend.controllers;
 
-import com.techmeetbackend.dtos.RegisterDTO;
+import com.techmeetbackend.dtos.RegisterRequestDTO;
 import com.techmeetbackend.domain.user.User;
 import com.techmeetbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody RegisterDTO user){
+    public ResponseEntity<User> createUser(@RequestBody RegisterRequestDTO user){
         User newUser = userService.createUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
