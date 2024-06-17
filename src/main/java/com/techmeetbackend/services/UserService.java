@@ -1,26 +1,26 @@
 package com.techmeetbackend.services;
 
-import com.techmeetbackend.dtos.RegisterRequestDTO;
 import com.techmeetbackend.domain.user.User;
+import com.techmeetbackend.dtos.RegisterRequestDTO;
 import com.techmeetbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    UserRepository userRepository;
 
-    public User findUserById(Long id) throws Exception {
-        return this.repository.findUserById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 
-    public UserDetails findUserByEmail(String email) {
-        return this.repository.findUserByEmail(email);
+    public Optional<User> findUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 
     public User createUser(RegisterRequestDTO data) {
@@ -29,12 +29,7 @@ public class UserService {
         return newUser;
     }
 
-    public List<User> getAllUsers() {
-        List<User> list = this.repository.findAll();
-        return list;
-    }
-
     public void saveUser(User user) {
-        this.repository.save(user);
+        this.userRepository.save(user);
     }
 }

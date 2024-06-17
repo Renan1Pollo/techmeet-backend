@@ -1,4 +1,4 @@
-package com.techmeetbackend.domain.user;
+package com.techmeetbackend.dtos;
 
 public enum UserRole {
     ADMIN("admin"),

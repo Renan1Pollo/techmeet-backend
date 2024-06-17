@@ -39,4 +39,5 @@ public class Event {
         this.image = data.image();
         this.date = data.date();
     }
+
 }
