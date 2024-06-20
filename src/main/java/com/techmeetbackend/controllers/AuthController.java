@@ -29,14 +29,20 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        User user = this.userService.findUserByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<User> userOptional = this.userService.findUserByEmail(body.email());
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+
+        User user = userOptional.get();
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getName(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getRole(), token));
         }
+
         return ResponseEntity.badRequest().build();
     }
-
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO data) {
@@ -50,6 +56,6 @@ public class AuthController {
         this.userService.saveUser(newUser);
 
         String token = this.tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token));
+        return ResponseEntity.ok(new ResponseDTO(newUser.getRole(), token));
     }
 }
