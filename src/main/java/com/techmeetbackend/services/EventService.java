@@ -27,4 +27,8 @@ public class EventService {
         this.repository.save(newEvent);
         return newEvent;
     }
+
+    public void deleteEvent (Long id) {
+            repository.deleteById(id);
+    }
 }

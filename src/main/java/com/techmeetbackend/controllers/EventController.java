@@ -30,7 +30,13 @@ public class EventController {
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
-        List<Event> users = this.eventService.getAllEvents();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        List<Event> events = this.eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return ResponseEntity.noContent().build();
     }
 }
