@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/events").permitAll()
                         .requestMatchers(HttpMethod.POST, "/events").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/events/{name}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/sendEmail").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
