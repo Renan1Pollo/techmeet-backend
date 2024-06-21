@@ -34,9 +34,11 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
-        eventService.deleteEvent(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{name}")
+    public ResponseEntity<?> deleteEventByName(@PathVariable String name) {
+        Boolean isDeleted  = this.eventService.deleteEventByName(name);
+        if (isDeleted) return ResponseEntity.noContent().build();
+        else return ResponseEntity.status(404).body("Event not found");
     }
 }
+
